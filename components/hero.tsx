@@ -2,10 +2,13 @@
 
 import { useRef } from "react";
 
-import { motion, useScroll, useTransform } from "motion/react";
-import * as m from "motion/react-m";
+import { User } from "@supabase/supabase-js";
+import { ArrowRightIcon } from "lucide-react";
+import { m, useScroll, useTransform } from "motion/react";
+import Link from "next/link";
+import { MotionButton } from "./ui/button";
 
-export default function Hero() {
+export default function Hero({ user }: { user: User | null }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -19,14 +22,14 @@ export default function Hero() {
       className="relative flex min-h-[calc(100dvh-136px)] w-full items-center justify-center overflow-hidden sm:min-h-[calc(100dvh-168px)] lg:min-h-[calc(100dvh-200px)]"
       ref={ref}
     >
-      <motion.div
+      <m.div
         style={{ y, opacity }}
         className="relative z-10 flex h-full flex-col items-center justify-center gap-12 px-4 text-center"
       >
         <m.h1
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, ease: "easeInOut", duration: 0.3 }}
+          transition={{ delay: 0.2, ease: "easeInOut" }}
           className="text-6xl font-bold tracking-tight text-white md:text-8xl"
         >
           Never Forget Your
@@ -38,13 +41,25 @@ export default function Hero() {
         <m.p
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, ease: "easeInOut", duration: 0.3 }}
-          className="max-w-3xl text-xl text-zinc-200"
+          transition={{ delay: 0.4, ease: "easeInOut" }}
+          className="max-w-3xl text-justify text-xl text-zinc-200"
         >
-          Track, manage, and optimize all your subscriptions in one place with
-          SubTrack.
+          Track, manage, and optimize all your subscriptions in one place with{" "}
+          <span className="font-bold">SubTrack</span>.
         </m.p>
-      </motion.div>
+        <MotionButton
+          asChild
+          type="button"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6, ease: "easeInOut" }}
+        >
+          <Link href={user ? "/admin" : "/sign-in"}>
+            {user ? "Start Tracking" : "Get Started"}{" "}
+            <ArrowRightIcon size={16} />
+          </Link>
+        </MotionButton>
+      </m.div>
     </section>
   );
 }
