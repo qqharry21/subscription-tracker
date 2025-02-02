@@ -4,6 +4,8 @@ export default async function Home() {
   return (
     <>
       <Hero />
+      <Hero />
+      <Hero />
     </>
   );
 }

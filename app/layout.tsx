@@ -1,12 +1,12 @@
 import { Geist, Pacifico } from "next/font/google";
 
+import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import HeaderAuth from "@/components/header-auth";
-import { MotionProvider } from "@/components/motion-provider";
+import MotionProvider from "@/components/motion-provider";
 import MouseMoveEffect from "@/components/mouse-move-effect";
-import { ThemeProvider } from "@/components/theme-provider";
+import ThemeProvider from "@/components/theme-provider";
 
-import { Footer } from "@/components/footer";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -43,26 +43,25 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <MotionProvider>
+        <MotionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
             <div className="flex min-h-screen flex-col items-center">
               <Header>
                 <HeaderAuth />
               </Header>
-              <main className="flex min-h-[calc(100dvh-136px)] w-full flex-grow items-center justify-center px-4 sm:min-h-[calc(100dvh-168px)] sm:px-6 lg:min-h-[calc(100dvh-200px)] lg:px-8">
+              <main className="flex w-full flex-grow flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
                 {children}
               </main>
-
               <Footer />
             </div>
             <MouseMoveEffect />
-          </MotionProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </MotionProvider>
       </body>
     </html>
   );
