@@ -1,4 +1,11 @@
-import { BellIcon, LogOutIcon, Sparkles, UserIcon } from "lucide-react";
+import {
+  BellIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  SettingsIcon,
+  Sparkles,
+  UserIcon,
+} from "lucide-react";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -46,18 +53,41 @@ export default async function HeaderAuth() {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/" className="flex w-full cursor-pointer items-center">
+          <Link
+            href="/admin"
+            className="flex w-full cursor-pointer items-center"
+          >
+            <LayoutDashboardIcon size={16} className="mr-2" />
+            <span>Dashboard</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href="/pricing"
+            className="flex w-full cursor-pointer items-center"
+          >
             <Sparkles size={16} className="mr-2" />
             <span>Upgrade to Pro</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link
-            href="/dashboard"
+            href="/admin/notification"
+            prefetch={false}
             className="flex w-full cursor-pointer items-center"
           >
             <BellIcon size={16} className="mr-2" />
             <span>Notification</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href="/admin/preferences"
+            prefetch={false}
+            className="flex w-full cursor-pointer items-center"
+          >
+            <SettingsIcon size={16} className="mr-2" />
+            <span>Preferences</span>
           </Link>
         </DropdownMenuItem>
         <form action={signOutAction}>
