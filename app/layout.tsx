@@ -1,11 +1,13 @@
-import DeployButton from '@/components/deploy-button';
-import { EnvVarWarning } from '@/components/env-var-warning';
+import { Geist, Pacifico } from 'next/font/google';
+
+import { Header } from '@/components/header';
 import HeaderAuth from '@/components/header-auth';
-import { ThemeSwitcher } from '@/components/theme-switcher';
-import { hasEnvVars } from '@/utils/supabase/check-env-vars';
-import { ThemeProvider } from 'next-themes';
-import { Geist } from 'next/font/google';
-import Link from 'next/link';
+import { MotionProvider } from '@/components/motion-provider';
+import MouseMoveEffect from '@/components/mouse-move-effect';
+import { ThemeProvider } from '@/components/theme-provider';
+
+import { Footer } from '@/components/footer';
+import { cn } from '@/lib/utils';
 import './globals.css';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -23,6 +25,12 @@ const geistSans = Geist({
   subsets: ['latin'],
 });
 
+const pacifico = Pacifico({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-pacifico',
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,44 +39,27 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={geistSans.className}
+      className={cn(geistSans.className, pacifico.variable)}
       suppressHydrationWarning>
       <body className='bg-background text-foreground'>
         <ThemeProvider
           attribute='class'
-          defaultTheme='system'
+          defaultTheme='dark'
           enableSystem
           disableTransitionOnChange>
-          <main className='min-h-screen flex flex-col items-center'>
-            <header className='w-full flex justify-center border-b border-b-foreground/10 h-16'>
-              <nav className='w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm'>
-                <div className='flex gap-5 items-center font-semibold'>
-                  <Link href={'/'}>Next.js Supabase Starter</Link>
-                  <div className='flex items-center gap-2'>
-                    <DeployButton />
-                  </div>
-                </div>
-                {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
-              </nav>
-            </header>
-            <div className='flex flex-grow items-center justify-center p-4 sm:p-6 lg:p-8'>
-              {children}
-            </div>
+          <MotionProvider>
+            <Header>
+              <HeaderAuth />
+            </Header>
+            <main className='min-h-screen flex flex-col items-center'>
+              <div className='flex flex-grow items-center justify-center p-4 sm:p-6 lg:p-8'>
+                {children}
+              </div>
 
-            <footer className='w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-4'>
-              <p>
-                Powered by{' '}
-                <a
-                  href='https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs'
-                  target='_blank'
-                  className='font-bold hover:underline'
-                  rel='noreferrer'>
-                  Supabase
-                </a>
-              </p>
-              <ThemeSwitcher />
-            </footer>
-          </main>
+              <Footer />
+            </main>
+            <MouseMoveEffect />
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>
