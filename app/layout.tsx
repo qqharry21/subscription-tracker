@@ -50,16 +50,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <MotionProvider>
-            <Header>
-              <HeaderAuth />
-            </Header>
-            <main className="flex min-h-screen flex-col items-center">
-              <div className="flex flex-grow items-center justify-center p-4 sm:p-6 lg:p-8">
+            <div className="flex min-h-screen flex-col items-center">
+              <Header>
+                <HeaderAuth />
+              </Header>
+              <main className="flex min-h-[calc(100dvh-136px)] w-full flex-grow items-center justify-center px-4 sm:min-h-[calc(100dvh-168px)] sm:px-6 lg:min-h-[calc(100dvh-200px)] lg:px-8">
                 {children}
-              </div>
+              </main>
 
               <Footer />
-            </main>
+            </div>
             <MouseMoveEffect />
           </MotionProvider>
         </ThemeProvider>
