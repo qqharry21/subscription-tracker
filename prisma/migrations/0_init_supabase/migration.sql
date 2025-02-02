@@ -1,5 +1,5 @@
 -- CreateSchema
-CREATE SCHEMA IF NOT EXISTS "auth";
+CREATE SCHEMA IF NOT EXISTS "other_schema";
 
 -- CreateSchema
 CREATE SCHEMA IF NOT EXISTS "public";
@@ -8,7 +8,7 @@ CREATE SCHEMA IF NOT EXISTS "public";
 CREATE TYPE "public"."Frequency" AS ENUM ('ONE_TIME', 'DAILY', 'WEEKLY', 'MONTHLY', 'ANNUALLY');
 
 -- CreateEnum
-CREATE TYPE "public"."ExpenseCategory" AS ENUM ('FOOD', 'TRANSPORTATION', 'SHOPPING', 'ENTERTAINMENT', 'BILLS', 'HEALTH', 'LEARNING', 'INVESTMENT', 'INSURANCE', 'RENTAL', 'TAXES', 'CHARITY', 'GIFT', 'FAMILY', 'TRAVEL', 'OTHER');
+CREATE TYPE "public"."Category" AS ENUM ('FOOD', 'TRANSPORTATION', 'SHOPPING', 'ENTERTAINMENT', 'BILLS', 'HEALTH', 'LEARNING', 'INVESTMENT', 'INSURANCE', 'RENTAL', 'TAXES', 'CHARITY', 'GIFT', 'FAMILY', 'TRAVEL', 'OTHER');
 
 -- CreateEnum
 CREATE TYPE "public"."Currency" AS ENUM ('USD', 'JPY', 'TWD');
@@ -20,7 +20,7 @@ CREATE TABLE "public"."subscription" (
     "amount" INTEGER NOT NULL,
     "currency" "public"."Currency" NOT NULL,
     "frequency" "public"."Frequency" NOT NULL,
-    "category" "public"."ExpenseCategory" NOT NULL,
+    "category" "public"."Category" NOT NULL,
     "shouldNotify" BOOLEAN NOT NULL,
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3),

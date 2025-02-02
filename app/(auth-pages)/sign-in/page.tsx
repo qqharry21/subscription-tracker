@@ -11,6 +11,7 @@ import { signInAction, signInWithGoogleAction } from '@/app/actions';
 
 export default async function Login(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
+  console.log('🚨 - searchParams', searchParams);
   return (
     <div className='flex flex-col gap-6'>
       <Card>
@@ -65,6 +66,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
                   <Input
                     id='email'
                     type='email'
+                    name='email'
                     placeholder='m@example.com'
                     required
                   />
@@ -80,6 +82,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
                   </div>
                   <Input
                     id='password'
+                    name='password'
                     type='password'
                     required
                   />
