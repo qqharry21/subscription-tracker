@@ -1,4 +1,4 @@
-import * as Types from '@prisma/client';
+import * as Types from "@prisma/client";
 export { Types };
 
 export {};
