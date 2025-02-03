@@ -1,4 +1,5 @@
 import FetchDataSteps from "@/components/tutorial/fetch-data-steps";
+import { Calendar } from "@/components/ui/calendar";
 import { createClient } from "@/utils/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -23,6 +24,14 @@ export default async function ProtectedPage() {
           user
         </div>
       </div>
+      <Calendar
+        className="w-full"
+        classNames={{
+          month: "w-full",
+          weekdays: " w-full items-center justify-between",
+          week: "justify-between items-center",
+        }}
+      />
       <div className="flex flex-col items-start gap-2">
         <h2 className="mb-4 text-2xl font-bold">Your user details</h2>
         <pre className="max-h-32 overflow-auto rounded border p-3 font-mono text-xs">
