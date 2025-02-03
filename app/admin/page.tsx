@@ -1,5 +1,4 @@
-import FetchDataSteps from "@/components/tutorial/fetch-data-steps";
-import { Calendar } from "@/components/ui/calendar";
+import SubscriptionCalendar from "@/components/subscription-calendar";
 import { createClient } from "@/utils/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -24,23 +23,12 @@ export default async function ProtectedPage() {
           user
         </div>
       </div>
-      <Calendar
-        className="w-full"
-        classNames={{
-          month: "w-full",
-          weekdays: " w-full items-center justify-between",
-          week: "justify-between items-center",
-        }}
-      />
+      <SubscriptionCalendar subscriptions={[]} />
       <div className="flex flex-col items-start gap-2">
         <h2 className="mb-4 text-2xl font-bold">Your user details</h2>
-        <pre className="max-h-32 overflow-auto rounded border p-3 font-mono text-xs">
+        <pre className="max-h-32 max-w-full overflow-auto rounded border p-3 font-mono text-xs">
           {JSON.stringify(user, null, 2)}
         </pre>
-      </div>
-      <div>
-        <h2 className="mb-4 text-2xl font-bold">Next steps</h2>
-        <FetchDataSteps />
       </div>
     </div>
   );

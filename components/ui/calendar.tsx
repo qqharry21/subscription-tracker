@@ -84,10 +84,12 @@ function Calendar({
         button_previous: cn(
           buttonVariants({ variant: "outline" }),
           "z-10 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+          classNames?.button_previous,
         ),
         button_next: cn(
           buttonVariants({ variant: "outline" }),
           "z-10 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+          classNames?.button_next,
         ),
         weeks: cn("w-full border-collapse space-y-1", classNames?.weeks),
         weekdays: cn("flex", classNames?.weekdays),
@@ -112,7 +114,7 @@ function Calendar({
         ),
         today: cn("bg-accent text-accent-foreground", classNames?.today),
         outside: cn(
-          "day-outside text-muted-foreground aria-selected:bg-accent/50 aria-selected:text-muted-foreground opacity-50 aria-selected:opacity-30",
+          "day-outside text-accent-foreground aria-selected:bg-accent/50 aria-selected:text-accent-foreground opacity-50 aria-selected:opacity-30",
           classNames?.outside,
         ),
         disabled: cn("text-muted-foreground opacity-50", classNames?.disabled),
@@ -139,9 +141,9 @@ Calendar.displayName = "Calendar";
 
 const CustomChevron = ({ ...props }) => {
   return props.orientation === "left" ? (
-    <ChevronLeftIcon {...props} className="size-4" />
+    <ChevronLeftIcon {...props} size={16} />
   ) : (
-    <ChevronRightIcon {...props} className="size-4" />
+    <ChevronRightIcon {...props} size={16} />
   );
 };
 
@@ -149,6 +151,7 @@ const CustomMonthYearDropdown = ({
   value,
   onChange,
   options,
+  className,
   ...props
 }: DropdownProps) => {
   const selected = React.useMemo(
@@ -169,14 +172,17 @@ const CustomMonthYearDropdown = ({
       }}
     >
       <SelectTrigger
-        className="h-7 border-none p-0 shadow-none focus:ring-0"
+        className={cn(
+          "h-7 border-none p-0 shadow-none focus:ring-0",
+          className,
+        )}
         aria-label={props["aria-label"]}
         disabled={props.disabled}
       >
         <SelectValue>{selected?.label}</SelectValue>
       </SelectTrigger>
       <SelectContent position="popper">
-        <ScrollArea className="h-40">
+        <ScrollArea className="h-50">
           {options?.map((option, id: number) => (
             <SelectItem
               key={`${option.value}-${id}`}

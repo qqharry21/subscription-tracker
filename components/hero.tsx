@@ -42,7 +42,7 @@ export default function Hero({ user }: { user: User | null }) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, ease: "easeInOut" }}
-          className="max-w-3xl text-justify text-xl text-zinc-200"
+          className="max-w-3xl text-xl text-balance text-zinc-200"
         >
           Track, manage, and optimize all your subscriptions in one place with{" "}
           <span className="font-bold">SubTrack</span>.
