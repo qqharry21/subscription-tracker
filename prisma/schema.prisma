@@ -11,7 +11,7 @@ datasource db {
 }
 
 model subscription {
-  id           String    @id @default(uuid())
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         String
   amount       Int
   currency     Currency
