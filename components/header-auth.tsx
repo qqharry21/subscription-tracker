@@ -55,6 +55,7 @@ export default async function HeaderAuth() {
         <DropdownMenuItem asChild>
           <Link
             href="/admin"
+            scroll={false}
             className="flex w-full cursor-pointer items-center"
           >
             <LayoutDashboardIcon size={16} className="mr-2" />
