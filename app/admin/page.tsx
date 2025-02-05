@@ -1,7 +1,8 @@
 import SubscriptionCalendar from "@/components/subscription-calendar";
 import { createClient } from "@/utils/supabase/server";
-import { InfoIcon } from "lucide-react";
 import { redirect } from "next/navigation";
+import { columns } from "./columns";
+import { DataTable } from "./data-table";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -14,22 +15,19 @@ export default async function ProtectedPage() {
     return redirect("/sign-in");
   }
 
+  const { data: subscriptions } = await supabase
+    .from("subscription")
+    .select("*")
+    .eq("user_id", user.id);
+  console.log("🚨 - subscriptions", subscriptions);
+
   return (
-    <div className="flex w-full flex-1 flex-col gap-12">
-      <div className="w-full">
-        <div className="bg-accent text-foreground flex items-center gap-3 rounded-md p-3 px-5 text-sm">
-          <InfoIcon size="16" strokeWidth={2} />
-          This is a protected page that you can only see as an authenticated
-          user
-        </div>
+    <div className="@container mx-auto w-full max-w-6xl flex-1">
+      <div className="relative mb-12">
+        <SubscriptionCalendar subscriptions={subscriptions ?? []} />
+        <div className="text-right">Total amount: $500/per month</div>
       </div>
-      <SubscriptionCalendar subscriptions={[]} />
-      <div className="flex flex-col items-start gap-2">
-        <h2 className="mb-4 text-2xl font-bold">Your user details</h2>
-        <pre className="max-h-32 max-w-full overflow-auto rounded border p-3 font-mono text-xs">
-          {JSON.stringify(user, null, 2)}
-        </pre>
-      </div>
+      <DataTable columns={columns} data={subscriptions ?? []} />
     </div>
   );
 }
