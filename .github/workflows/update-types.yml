@@ -25,10 +25,7 @@ jobs:
         with:
           node-version: 18
       - name: Update Supabase types
-        run: |
-          npm i -g typescript
-          npm run update-types
-          npm run generate:enums
+        run: npm run update-types
       - name: check for file changes
         id: git_status
         run: |
