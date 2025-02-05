@@ -17,21 +17,19 @@ import { signInAction, signInWithGoogleAction } from "@/app/actions";
 
 export default async function Login(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
-  console.log("🚨 - searchParams", searchParams);
+
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>
-            Login with your Apple or Google account
-          </CardDescription>
+          <CardDescription>Login with your Google account</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <Button type="button" variant="outline" className="w-full">
+                {/* <Button type="button" variant="outline" className="w-full">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -43,7 +41,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
                     />
                   </svg>
                   Login with Apple
-                </Button>
+                </Button> */}
                 <Button
                   type="button"
                   variant="outline"
