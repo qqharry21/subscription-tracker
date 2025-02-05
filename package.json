@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "generate:enums": "node ./scripts/generate-enums.js"
+    "generate:enums": "node ./scripts/generate-enums.js",
+    "update-types": "npx supabase gen types --lang=typescript --project-id \"$PROJECT_REF\" > ./types/supabase.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.2.1",
