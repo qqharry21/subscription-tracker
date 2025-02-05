@@ -1,4 +1,4 @@
-import { Tables } from "@/lib/database.types";
+import { Tables } from "@/types/supabase";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<Tables<"subscription">>[] = [

@@ -1,6 +1,3 @@
-import * as Types from "@prisma/client";
-export { Types };
-
 export {};
 declare global {
   interface IntlMessages extends Messages, ZodMessages {}

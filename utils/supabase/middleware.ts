@@ -1,4 +1,4 @@
-import { Database } from "@/lib/database.types";
+import { Database } from "@/types/supabase";
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 

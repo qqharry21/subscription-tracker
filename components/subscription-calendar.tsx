@@ -4,8 +4,9 @@ import { format } from "date-fns";
 import { createContext, use, useCallback, useState } from "react";
 import { DayButtonProps } from "react-day-picker";
 
-import { Tables } from "@/lib/database.types";
+import { isSubscriptionOnDate } from "@/lib/helper";
 import { cn } from "@/lib/utils";
+import { Tables } from "@/types/supabase";
 import SubscriptionLabel from "./subscription-label";
 import { Calendar } from "./ui/calendar";
 
@@ -24,7 +25,8 @@ export default function SubscriptionCalendar({
   );
 
   const getSubscriptionForDate = useCallback(
-    (date: Date) => subscriptions,
+    (date: Date) =>
+      subscriptions.filter((sub) => isSubscriptionOnDate(date, sub)),
     [subscriptions],
   );
   return (
