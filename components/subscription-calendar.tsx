@@ -4,11 +4,12 @@ import { format } from "date-fns";
 import { createContext, use, useCallback, useState } from "react";
 import { DayButtonProps } from "react-day-picker";
 
+import SubscriptionLabel from "./subscription-label";
+import { Calendar } from "./ui/calendar";
+
 import { isSubscriptionOnDate } from "@/lib/helper";
 import { cn } from "@/lib/utils";
 import { Tables } from "@/types/supabase";
-import SubscriptionLabel from "./subscription-label";
-import { Calendar } from "./ui/calendar";
 
 const SelectedDateContext = createContext<{
   selected?: Date;
@@ -85,29 +86,33 @@ const DayButton = ({
 }: CustomDayButtonProps) => {
   const { setSelected } = use(SelectedDateContext);
   return (
-    <button
+    <div
+      role="button"
       className={cn(
         className,
         "relative flex size-full min-h-[inherit] flex-grow cursor-pointer flex-col overflow-hidden focus:outline-none",
       )}
-      {...props}
-      onClick={() => setSelected?.(undefined)}
-      onDoubleClick={() => setSelected?.(day.date)}
+      tabIndex={-1}
+      aria-label={props["aria-label"]}
     >
       <div className="w-full p-2">
         <span className="mb-2 block w-full text-center select-none">
           {format(day.date, "d")}
         </span>
-        <div className="grid w-full gap-2">
-          {existSubscription.map((_, index) => (
+        <div className="relative grid w-full gap-2">
+          {existSubscription.map((subscription) => (
             <SubscriptionLabel
-              key={index}
-              // key={subscription.id}
-              // subscription={subscription}
+              key={`${subscription.id}-${day.date}`}
+              subscription={subscription}
             />
           ))}
         </div>
       </div>
-    </button>
+      <div
+        className="absolute top-0 left-0 z-[5] size-full"
+        onClick={() => setSelected?.(undefined)}
+        onDoubleClick={() => setSelected?.(day.date)}
+      ></div>
+    </div>
   );
 };

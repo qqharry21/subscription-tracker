@@ -2,40 +2,53 @@
 
 import { useState } from "react";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { Tables } from "@/types/supabase";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 
-export default function SubscriptionLabel() {
+export default function SubscriptionLabel({
+  subscription,
+}: {
+  subscription: Tables<"subscription">;
+}) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setDialogOpen(true);
   };
 
   return (
     <>
-      <HoverCard openDelay={500} closeDelay={0}>
-        <HoverCardTrigger asChild>
-          <div
-            className="w-full cursor-pointer truncate rounded-sm bg-neutral-700 p-1 text-left transition-all duration-200 select-none group-data-outside:bg-neutral-800 group-data-outside:group-hover:bg-neutral-700 group-data-outside:group-data-selected:bg-neutral-700 hover:!bg-neutral-500"
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogTrigger asChild>
+          <Button
+            className="bg-primary/80 hover:!bg-primary/90 group-data-outside:bg-primary/40 group-data-outside:group-hover:bg-primary/80 group-data-outside:group-data-selected:bg-primary/80 z-10 h-7 w-full justify-start select-none"
+            size="sm"
+            variant="default"
             onClick={handleClick}
           >
-            Netflix
-          </div>
-        </HoverCardTrigger>
-        <HoverCardContent
-          className="flex w-fit flex-col gap-2 !opacity-100"
-          side="bottom"
-        >
-          Netflix
-        </HoverCardContent>
-      </HoverCard>
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            {subscription.name}
+          </Button>
+        </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>編輯支出</DialogTitle>
+            <DialogTitle>Subscription Details</DialogTitle>
           </DialogHeader>
-          <div className="max-h-[600px] overflow-auto">Test</div>
+          <div className="max-h-[600px] overflow-auto">
+            <div className="p-4">
+              <p>{subscription.name}</p>
+              <p>{subscription.amount}</p>
+              <p>{subscription.start_date}</p>
+              <p>{subscription.end_date}</p>
+              <p>{subscription.category}</p>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </>
