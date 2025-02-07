@@ -9,6 +9,7 @@ import ThemeProvider from "@/components/theme-provider";
 
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -59,6 +60,7 @@ export default function RootLayout({
               </main>
               <Footer />
             </div>
+            <Toaster />
             <MouseMoveEffect />
           </ThemeProvider>
         </MotionProvider>
