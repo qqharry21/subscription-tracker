@@ -43,7 +43,6 @@ export default function SubscriptionCalendar({
         className="w-full px-0"
         classNames={{
           month: "w-full",
-          weeks: "space-y-4",
           weekdays: "w-full items-center justify-between gap-2",
           weekday: "w-full select-none bg-accent/50 py-2",
           week: "justify-between items-center gap-2 max-w-full",
@@ -90,16 +89,16 @@ const DayButton = ({
       role="button"
       className={cn(
         className,
-        "relative flex size-full min-h-[inherit] flex-grow cursor-pointer flex-col overflow-hidden focus:outline-none",
+        "relative size-full min-h-[inherit] cursor-pointer overflow-hidden focus:outline-none",
       )}
       tabIndex={-1}
       aria-label={props["aria-label"]}
     >
-      <div className="w-full p-2">
-        <span className="mb-2 block w-full text-center select-none">
+      <div className="relative flex h-full w-full flex-col items-center justify-center p-2">
+        <span className="mb-1 block w-full flex-1 text-center select-none md:mb-2">
           {format(day.date, "d")}
         </span>
-        <div className="relative grid w-full gap-2">
+        <div className="hidden w-full gap-2 md:grid">
           {existSubscription.map((subscription) => (
             <SubscriptionLabel
               key={`${subscription.id}-${day.date}`}
@@ -107,11 +106,18 @@ const DayButton = ({
             />
           ))}
         </div>
+        <div className="flex w-full max-w-full flex-wrap items-center justify-center gap-2 md:hidden">
+          {Array.from({ length: 8 }).map((subscription, index) => (
+            <div
+              key={`${day.date}-${index}`}
+              className="bg-primary/80 text-primary-foreground/80 size-1 shrink-0 rounded-md"
+            />
+          ))}
+        </div>
       </div>
       <div
         className="absolute top-0 left-0 z-[5] size-full"
-        onClick={() => setSelected?.(undefined)}
-        onDoubleClick={() => setSelected?.(day.date)}
+        onClick={() => setSelected?.(day.date)}
       ></div>
     </div>
   );

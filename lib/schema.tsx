@@ -20,8 +20,8 @@ export const subscriptionSchema = z
   .object({
     id: idSchema,
     title: titleSchema,
-    start_date: z.date({ message: "開始日期為必填" }),
-    end_date: z.date().optional().nullable(),
+    start_date: z.string({ message: "開始日期為必填" }),
+    end_date: z.string().optional().nullable(),
     currency: currencySchema,
     // currencyRate: z.number(),
     amount: amountSchema.max(500000, {
