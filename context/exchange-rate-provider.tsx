@@ -1,16 +1,15 @@
-'use client';
+"use client";
 
-import { Types } from '@/lib/types';
-import React, { createContext, useContext } from 'react';
+import React, { createContext, use } from "react";
 
-const ExchangeRateContext = createContext<Types.ExchangeRate[] | null>(null);
+const ExchangeRateContext = createContext<any[] | null>(null);
 
 export const ExchangeRateProvider = ({
   children,
   exchangeRates,
 }: {
   children: React.ReactNode;
-  exchangeRates: Types.ExchangeRate[];
+  exchangeRates: any[];
 }) => {
   return (
     <ExchangeRateContext.Provider value={exchangeRates}>
@@ -20,10 +19,10 @@ export const ExchangeRateProvider = ({
 };
 
 export const useExchangeRates = () => {
-  const context = useContext(ExchangeRateContext);
+  const context = use(ExchangeRateContext);
   if (!context) {
     throw new Error(
-      'useExchangeRates must be used within an ExchangeRateProvider',
+      "useExchangeRates must be used within an ExchangeRateProvider",
     );
   }
   return context;

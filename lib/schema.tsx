@@ -1,35 +1,31 @@
 import { Category, Currency, Frequency } from "@/types/enums";
-import { date, z } from "zod";
-
-const idSchema = z.string().optional();
-const titleSchema = z
-  .string()
-  .min(1, {
-    message: "項目名稱為必填",
-  })
-  .max(255);
-
-const frequencySchema = z.nativeEnum(Frequency);
-const currencySchema = z.nativeEnum(Currency);
-const amountSchema = z.number().min(1, {
-  message: "金額必須大於 1",
-});
-const noteSchema = z.string().max(255, { message: "描述最多 255 字元" });
+import { z } from "zod";
 
 export const subscriptionSchema = z
   .object({
-    id: idSchema,
-    title: titleSchema,
-    start_date: z.string({ message: "開始日期為必填" }),
+    name: z
+      .string()
+      .min(1, {
+        message: "Name is required",
+      })
+      .max(255),
+    start_date: z.string({ message: "Start date is required" }),
     end_date: z.string().optional().nullable(),
-    currency: currencySchema,
+    currency: z.nativeEnum(Currency),
     // currencyRate: z.number(),
-    amount: amountSchema.max(500000, {
-      message: "金額必須介於 1 至 500,000 之間",
-    }),
+    amount: z
+      .number()
+      .min(1, {
+        message: "Amount must be greater than 0",
+      })
+      .max(500000, {
+        message: "Amount must be less than 500,000",
+      }),
     category: z.nativeEnum(Category),
-    frequency: frequencySchema,
-    note: noteSchema,
+    frequency: z.nativeEnum(Frequency),
+    note: z.string().max(255, {
+      message: "Note must be smaller than 255 words",
+    }),
   })
   .refine(
     (data) => {
@@ -44,17 +40,4 @@ export const subscriptionSchema = z
     },
   );
 
-export type ExpenseFormValue = z.infer<typeof subscriptionSchema>;
-
-export const incomeSchema = z.object({
-  id: idSchema,
-  title: titleSchema,
-  date: date({ message: "日期為必填" }),
-  currency: currencySchema,
-  amount: amountSchema.max(10000000, {
-    message: "金額必須介於 1 至 10,000,000 之間",
-  }),
-  category: z.nativeEnum(Category),
-  frequency: frequencySchema,
-  description: noteSchema,
-});
+export type SubscriptionFormValue = z.infer<typeof subscriptionSchema>;

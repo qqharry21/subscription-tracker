@@ -20,106 +20,106 @@ import {
 
 export const category = {
   [Category.FOOD]: {
-    label: "食物",
+    label: "Food",
     icon: PizzaIcon,
     color: "hsl(var(--chart-1))",
   },
   [Category.TRANSPORTATION]: {
-    label: "交通",
+    label: "Transportation",
     icon: TramFrontIcon,
     color: "hsl(var(--chart-2))",
   },
   [Category.ENTERTAINMENT]: {
-    label: "娛樂",
+    label: "Entertainment",
     icon: Gamepad2Icon,
     color: "hsl(var(--chart-3))",
   },
   [Category.HEALTH]: {
-    label: "健康",
+    label: "Health",
     icon: HeartPulseIcon,
     color: "hsl(var(--chart-4))",
   },
   [Category.BILLS]: {
-    label: "帳單",
+    label: "Bills",
     icon: ReceiptIcon,
     color: "hsl(var(--chart-5))",
   },
   [Category.SHOPPING]: {
-    label: "購物",
+    label: "Shopping",
     icon: ShoppingCartIcon,
     color: "hsl(var(--chart-6))",
   },
   [Category.LEARNING]: {
-    label: "教育",
+    label: "Learning",
     icon: GraduationCapIcon,
     color: "hsl(var(--chart-7))",
   },
   [Category.TRAVEL]: {
-    label: "旅遊",
+    label: "Travel",
     icon: PlaneIcon,
     color: "hsl(var(--chart-8))",
   },
   [Category.INVESTMENT]: {
-    label: "投資",
+    label: "Investment",
     icon: CircleDollarSignIcon,
     color: "hsl(var(--chart-9))",
   },
   [Category.INSURANCE]: {
-    label: "保險",
+    label: "Insurance",
     icon: ShieldPlusIcon,
     color: "hsl(var(--chart-10))",
   },
   [Category.RENTAL]: {
-    label: "租金",
+    label: "Rental",
     icon: HomeIcon,
     color: "hsl(var(--chart-11))",
   },
   [Category.TAXES]: {
-    label: "稅金",
+    label: "Taxes",
     icon: LandmarkIcon,
     color: "hsl(var(--chart-12))",
   },
   [Category.GIFT]: {
-    label: "禮物",
+    label: "Gift",
     icon: GiftIcon,
     color: "hsl(var(--chart-13))",
   },
   [Category.FAMILY]: {
-    label: "家庭",
+    label: "Family",
     icon: BookUserIcon,
     color: "hsl(var(--chart-14))",
   },
   [Category.CHARITY]: {
-    label: "慈善",
+    label: "Charity",
     icon: HeartHandshakeIcon,
     color: "hsl(var(--chart-15))",
   },
   [Category.OTHER]: {
-    label: "其他",
+    label: "Other",
     icon: CogIcon,
     color: "hsl(var(--chart-16))",
   },
 } as const;
 
 export const frequency = {
-  [Frequency.ONE_TIME]: "一次性",
-  [Frequency.DAILY]: "每日",
-  [Frequency.WEEKLY]: "每週",
-  [Frequency.MONTHLY]: "每月",
-  [Frequency.ANNUALLY]: "每年",
+  [Frequency.ONE_TIME]: "Once",
+  [Frequency.DAILY]: "Daily",
+  [Frequency.WEEKLY]: "Weekly",
+  [Frequency.MONTHLY]: "Monthly",
+  [Frequency.ANNUALLY]: "Annually",
 } as const;
 
 export const currency = {
   [Currency.TWD]: {
-    label: "台幣",
+    label: "TWD",
     symbol: "NT$",
   },
   [Currency.USD]: {
-    label: "美金",
+    label: "USD",
     symbol: "$",
   },
   [Currency.JPY]: {
-    label: "日幣",
+    label: "JPY",
     symbol: "¥",
   },
 } as const;
