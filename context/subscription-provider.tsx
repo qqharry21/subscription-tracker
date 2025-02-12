@@ -12,7 +12,7 @@ import {
 
 import { Tables } from "@/types/supabase";
 
-const SubscriptionSelectedContext = createContext<{
+const SubscriptionContext = createContext<{
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedSubscription?: Tables<"subscription">;
@@ -25,7 +25,7 @@ const SubscriptionSelectedContext = createContext<{
   setSelectedSubscription: () => {},
 });
 
-export const SubscriptionSelectedProvider = ({
+export const SubscriptionProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -35,8 +35,15 @@ export const SubscriptionSelectedProvider = ({
     Tables<"subscription"> | undefined
   >();
 
+  const onDialogOpenChange = (open: boolean) => {
+    if (!open) {
+      setSelectedSubscription(undefined);
+    }
+    setIsDialogOpen(open);
+  };
+
   return (
-    <SubscriptionSelectedContext.Provider
+    <SubscriptionContext.Provider
       value={{
         selectedSubscription,
         setSelectedSubscription: setSelectedSubscription,
@@ -45,7 +52,7 @@ export const SubscriptionSelectedProvider = ({
       }}
     >
       {children}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog open={isDialogOpen} onOpenChange={onDialogOpenChange}>
         <DialogContent
           onEscapeKeyDown={(e) => e.preventDefault()}
           // onPointerDownOutside={(e) => e.preventDefault()}
@@ -53,31 +60,19 @@ export const SubscriptionSelectedProvider = ({
           <DialogHeader>
             <DialogTitle>Subscription Details</DialogTitle>
           </DialogHeader>
-          <SubscriptionForm mode={selectedSubscription ? "update" : "create"} />
+
+          <SubscriptionForm
+            mode={selectedSubscription ? "update" : "create"}
+            defaultValues={selectedSubscription}
+          />
         </DialogContent>
       </Dialog>
-      {/* <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Unsaved changes will be lost.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => setIsDialogOpen(false)}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog> */}
-    </SubscriptionSelectedContext.Provider>
+    </SubscriptionContext.Provider>
   );
 };
 
-export const useSubscriptionSelected = () => {
-  const context = use(SubscriptionSelectedContext);
+export const useSubscription = () => {
+  const context = use(SubscriptionContext);
   if (!context) {
     throw new Error(
       "useSelectedSubscription must be used within a SelectedSubscriptionProvider",

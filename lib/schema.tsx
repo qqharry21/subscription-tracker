@@ -30,13 +30,13 @@ export const subscriptionSchema = z
   .refine(
     (data) => {
       if (data.end_date !== undefined && data.end_date !== null) {
-        // return data.end_date > data.start_date;
+        return new Date(data.end_date) > new Date(data.start_date);
       }
       return true;
     },
     {
-      message: "結束日期必須晚於開始日期",
-      path: ["endTime"],
+      message: "End date must be greater than start date",
+      path: ["end_date"],
     },
   );
 

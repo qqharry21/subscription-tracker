@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { DayButtonProps } from "react-day-picker";
 
 import { useSelectedDate } from "@/context/selected-date-context";
-import { useSubscriptionSelected } from "@/context/subscription-selected-provider";
+import { useSubscription } from "@/context/subscription-provider";
 import { Button } from "./ui/button";
 
 import { cn } from "@/lib/utils";
@@ -18,12 +18,11 @@ export const SubscriptionDayButton = ({
   ...props
 }: CustomDayButtonProps) => {
   const { setSelectedDate } = useSelectedDate();
-  const { setIsDialogOpen, setSelectedSubscription } =
-    useSubscriptionSelected();
+  const { setIsDialogOpen, setSelectedSubscription } = useSubscription();
 
   const handleClick = (subscription: Tables<"subscription">) => {
-    setIsDialogOpen(true);
     setSelectedSubscription(subscription);
+    setIsDialogOpen(true);
   };
 
   return (

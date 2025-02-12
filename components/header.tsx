@@ -1,19 +1,11 @@
 "use client";
 
+import { useIsScroll } from "@/hooks/use-is-scroll";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export const Header = ({ children }: PropsWithChildren) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const isScrolled = useIsScroll();
 
   return (
     <header

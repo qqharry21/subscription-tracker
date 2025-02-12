@@ -1,6 +1,7 @@
 import SubscriptionCalendar from "@/components/subscription-calendar";
+import { SubscriptionCreateButton } from "@/components/subscription-create-button";
 import SelectedDateProvider from "@/context/selected-date-context";
-import { SubscriptionSelectedProvider } from "@/context/subscription-selected-provider";
+import { SubscriptionProvider } from "@/context/subscription-provider";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { columns } from "./columns";
@@ -24,7 +25,7 @@ export default async function ProtectedPage() {
   console.log("🚨 - subscriptions", subscriptions);
 
   return (
-    <SubscriptionSelectedProvider>
+    <SubscriptionProvider>
       <SelectedDateProvider>
         <div className="@container mx-auto w-full max-w-6xl flex-1">
           <div className="relative mb-12">
@@ -33,7 +34,8 @@ export default async function ProtectedPage() {
           </div>
           <DataTable columns={columns} data={subscriptions ?? []} />
         </div>
+        <SubscriptionCreateButton />
       </SelectedDateProvider>
-    </SubscriptionSelectedProvider>
+    </SubscriptionProvider>
   );
 }

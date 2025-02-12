@@ -16,13 +16,19 @@ interface SelectOption {
   label: string;
 }
 
+interface ClassNames {
+  selectClassName?: string;
+  inputClassName?: string;
+  prefixClassName?: string;
+}
+
 export interface SelectInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefix"> {
   selectOptions: SelectOption[];
   selectedOption: string;
   onSelectChange: (value: string) => void;
   selectPlaceholder?: string;
-  selectClassName?: string;
+  classNames?: ClassNames;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
@@ -34,7 +40,7 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
       selectedOption,
       onSelectChange,
       selectPlaceholder = "Select",
-      selectClassName,
+      classNames,
       value,
       onChange,
       className,
@@ -58,6 +64,7 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
         className={cn(
           "ring-offset-background flex rounded-md shadow-sm",
           isFocused ? "ring-ring ring-2 ring-offset-2" : "ring-input ring-1",
+          className,
         )}
         role="button"
         onFocus={handleFocus}
@@ -65,15 +72,15 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
       >
         <Select
           value={selectedOption}
-          disabled={props.disabled}
           onValueChange={onSelectChange}
           aria-labelledby="select-label"
         >
           <SelectTrigger
+            disabled={props.disabled}
             className={cn(
               "max-w-40 min-w-fit rounded-l-md rounded-r-none border-0 shadow-none focus:ring-0 focus:ring-offset-0",
               isFocused ? "ring-0" : "",
-              selectClassName,
+              classNames?.selectClassName,
             )}
             aria-haspopup="listbox"
             aria-expanded={isFocused}
@@ -90,7 +97,12 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
           </SelectContent>
         </Select>
         {prefix && (
-          <div className="border-input bg-muted flex cursor-default items-center border-x px-3">
+          <div
+            className={cn(
+              "border-input bg-muted flex cursor-default items-center border-x px-3 select-none",
+              classNames?.prefixClassName,
+            )}
+          >
             {prefix}
           </div>
         )}
@@ -102,6 +114,7 @@ export const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
             "rounded-l-none border-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0",
             isFocused ? "ring-0" : "",
             prefix && "rounded-l-none",
+            classNames?.inputClassName,
           )}
           {...props}
         />
