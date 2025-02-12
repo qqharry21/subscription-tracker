@@ -55,7 +55,7 @@ export type Database = {
           note?: string | null
           should_notify: boolean
           start_date: string
-          updated_at: string
+          updated_at?: string
           user_id?: string | null
         }
         Update: {
