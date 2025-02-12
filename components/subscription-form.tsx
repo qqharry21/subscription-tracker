@@ -10,7 +10,7 @@ import {
   TrashIcon,
   UnlockIcon,
 } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -81,7 +81,7 @@ export const SubscriptionForm = ({
   );
   const [readOnly, setReadOnly] = useState(mode === "update");
   const [showAlert, setShowAlert] = useState(false);
-  const { setIsDialogOpen } = useSubscription();
+  const { setIsDialogOpen, setIsDirty } = useSubscription();
 
   const form = useForm<Tables<"subscription">>({
     mode: "onChange",
@@ -137,6 +137,10 @@ export const SubscriptionForm = ({
     console.log("🚨 - error", error);
     setIsDialogOpen(false);
   };
+
+  useEffect(() => {
+    setIsDirty(form.formState.isDirty);
+  }, [form.formState.isDirty]);
 
   return (
     <>

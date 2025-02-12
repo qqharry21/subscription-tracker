@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "../components/ui/dialog";
 
+import { UnsavedAlertDialog } from "@/components/unsaved-alert";
 import { Tables } from "@/types/supabase";
 
 const SubscriptionContext = createContext<{
@@ -19,10 +20,12 @@ const SubscriptionContext = createContext<{
   setSelectedSubscription: React.Dispatch<
     React.SetStateAction<Tables<"subscription"> | undefined>
   >;
+  setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   isDialogOpen: false,
   setIsDialogOpen: () => {},
   setSelectedSubscription: () => {},
+  setIsDirty: () => {},
 });
 
 export const SubscriptionProvider = ({
@@ -31,6 +34,8 @@ export const SubscriptionProvider = ({
   children: React.ReactNode;
 }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
   const [selectedSubscription, setSelectedSubscription] = useState<
     Tables<"subscription"> | undefined
   >();
@@ -49,13 +54,19 @@ export const SubscriptionProvider = ({
         setSelectedSubscription: setSelectedSubscription,
         isDialogOpen,
         setIsDialogOpen,
+        setIsDirty,
       }}
     >
       {children}
       <Dialog open={isDialogOpen} onOpenChange={onDialogOpenChange}>
         <DialogContent
           onEscapeKeyDown={(e) => e.preventDefault()}
-          // onPointerDownOutside={(e) => e.preventDefault()}
+          onPointerDownOutside={(e) => {
+            if (isDirty) {
+              e.preventDefault();
+              setShowAlert(true);
+            }
+          }}
         >
           <DialogHeader>
             <DialogTitle>Subscription Details</DialogTitle>
@@ -67,6 +78,11 @@ export const SubscriptionProvider = ({
           />
         </DialogContent>
       </Dialog>
+      <UnsavedAlertDialog
+        open={showAlert}
+        onOpenChange={setShowAlert}
+        onContinueAction={() => setIsDialogOpen(false)}
+      />
     </SubscriptionContext.Provider>
   );
 };
