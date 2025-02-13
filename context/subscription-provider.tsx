@@ -39,6 +39,7 @@ export const SubscriptionProvider = ({
   const [selectedSubscription, setSelectedSubscription] = useState<
     Tables<"subscription"> | undefined
   >();
+  console.log("🚨 - selectedSubscription", selectedSubscription);
 
   const onDialogOpenChange = (open: boolean) => {
     if (!open) {

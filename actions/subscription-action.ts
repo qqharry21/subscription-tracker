@@ -1,6 +1,5 @@
 "use server";
 
-// import { auth } from "@/auth";
 import { subscriptionSchema } from "@/lib/schema";
 import { createClient } from "@/utils/supabase/server";
 import { actionData } from "http-react";
@@ -21,7 +20,6 @@ export async function createSubscription(data: any) {
 
     const parsed = subscriptionSchema.safeParse(data);
     if (!parsed.success) {
-      console.log("parsed.error.format()", parsed.error.format());
       return actionData(parsed.error.format(), { status: 400 });
     }
 
@@ -37,7 +35,6 @@ export async function createSubscription(data: any) {
     revalidatePath("/admin");
     return actionData(newSubscription, { status: 201 });
   } catch (error) {
-    console.log("🚨 - error", error);
     return actionData(error, { status: 500 });
   }
 }
@@ -55,9 +52,8 @@ export async function updateSubscription(data: any) {
       });
 
     const parsed = subscriptionSchema.safeParse(data);
-    console.log("🚨 - parsed", parsed);
+
     if (!parsed.success) {
-      console.log("parsed.error.format()", parsed.error.format());
       return actionData(parsed.error.format(), { status: 400 });
     }
 
@@ -66,7 +62,6 @@ export async function updateSubscription(data: any) {
       .update(data)
       .eq("id", data.id)
       .select();
-    console.log("🚨 - error", error);
 
     if (error) {
       return actionData(error, { status: 500 });
@@ -75,13 +70,11 @@ export async function updateSubscription(data: any) {
     revalidatePath("/admin");
     return actionData(updateSubscription, { status: 201 });
   } catch (error) {
-    console.log("🚨 - error", error);
     return actionData(error, { status: 500 });
   }
 }
 
 export async function deleteSubscription(id: string) {
-  console.log("🚨 - id", id);
   try {
     const supabase = await createClient();
 
@@ -98,8 +91,9 @@ export async function deleteSubscription(id: string) {
       .from("subscription")
       .delete()
       .eq("id", id)
-      .eq("user_id", user.id);
-    console.log("🚨 - error", error);
+      .select();
+
+    if (error) throw error;
 
     revalidatePath("/admin");
     return actionData(deletedSubscription, { status: 204 });
