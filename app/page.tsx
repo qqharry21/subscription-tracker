@@ -11,8 +11,6 @@ export default async function Home() {
   return (
     <>
       <Hero user={user} />
-      <Hero user={user} />
-      <Hero user={user} />
     </>
   );
 }
