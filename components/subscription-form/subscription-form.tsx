@@ -1,14 +1,14 @@
-import { memo, useState, useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 
 import { useSubscription } from "@/context/subscription-provider";
-import { FormFields } from "./form-fields";
-import { FormActions } from "./form-actions";
-import { UnsavedAlertDialog } from "../unsaved-alert";
 import { Form } from "../ui/form";
+import { UnsavedAlertDialog } from "../unsaved-alert";
+import { FormActions } from "./form-actions";
+import { FormFields } from "./form-fields";
 
 import {
-  useSubscriptionForm,
   defaultFormValues,
+  useSubscriptionForm,
 } from "./use-subscription-form";
 
 import { Tables } from "@/types/supabase";
@@ -24,7 +24,7 @@ export const SubscriptionForm = memo(
     const [showAlert, setShowAlert] = useState(false);
     const { setIsDialogOpen, setIsDirty } = useSubscription();
 
-    const { form, isLoading, isDeleteLoading, submitForm, deleteAction } =
+    const { form, isLoading, isDeleteLoading, handleSubmit, handleDelete } =
       useSubscriptionForm({
         mode,
         defaultValues,
@@ -66,10 +66,11 @@ export const SubscriptionForm = memo(
     return (
       <>
         <Form {...form}>
-          <form onSubmit={submitForm} onKeyDown={handleKeydown}>
+          <form onSubmit={handleSubmit} onKeyDown={handleKeydown}>
             <FormFields
               form={form}
               readOnly={readOnly}
+              isLoading={isLoading}
               isDeleteLoading={isDeleteLoading}
             />
             <FormActions
@@ -78,7 +79,7 @@ export const SubscriptionForm = memo(
               readOnly={readOnly}
               isLoading={isLoading}
               isDeleteLoading={isDeleteLoading}
-              onDeleteAction={deleteAction}
+              onDeleteAction={handleDelete}
               onSwitchReadOnly={handleSwitchReadOnly}
             />
           </form>

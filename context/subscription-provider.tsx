@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, use, useState } from "react";
+import { createContext, use, useMemo, useCallback, useState } from "react";
 
 import { SubscriptionForm } from "@/components/subscription-form";
 import {
@@ -8,25 +8,22 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "../components/ui/dialog";
-
+} from "@/components/ui/dialog";
 import { UnsavedAlertDialog } from "@/components/unsaved-alert";
+
 import { Tables } from "@/types/supabase";
 
-const SubscriptionContext = createContext<{
+interface SubscriptionContextType {
   isDialogOpen: boolean;
-  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDialogOpen: (open: boolean) => void;
   selectedSubscription?: Tables<"subscription">;
-  setSelectedSubscription: React.Dispatch<
-    React.SetStateAction<Tables<"subscription"> | undefined>
-  >;
-  setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
-}>({
-  isDialogOpen: false,
-  setIsDialogOpen: () => {},
-  setSelectedSubscription: () => {},
-  setIsDirty: () => {},
-});
+  setSelectedSubscription: (subscription?: Tables<"subscription">) => void;
+  setIsDirty: (isDirty: boolean) => void;
+}
+
+const SubscriptionContext = createContext<SubscriptionContextType | undefined>(
+  undefined,
+);
 
 export const SubscriptionProvider = ({
   children,
@@ -39,61 +36,81 @@ export const SubscriptionProvider = ({
   const [selectedSubscription, setSelectedSubscription] = useState<
     Tables<"subscription"> | undefined
   >();
-  console.log("🚨 - selectedSubscription", selectedSubscription);
 
-  const onDialogOpenChange = (open: boolean) => {
+  const handleDialogOpenChange = useCallback((open: boolean) => {
     if (!open) {
       setSelectedSubscription(undefined);
     }
     setIsDialogOpen(open);
-  };
+  }, []);
+
+  const handleCloseDialog = useCallback(
+    (e: Event) => {
+      if (isDirty) {
+        e.preventDefault();
+        setShowAlert(true);
+      }
+    },
+    [isDirty],
+  );
+
+  const handleContinueAction = useCallback(() => {
+    setIsDialogOpen(false);
+  }, []);
+
+  const contextValue = useMemo<SubscriptionContextType>(
+    () => ({
+      selectedSubscription,
+      setSelectedSubscription,
+      isDialogOpen,
+      setIsDialogOpen,
+      setIsDirty,
+    }),
+    [selectedSubscription, isDialogOpen],
+  );
+
+  const dialogContent = useMemo(
+    () => (
+      <DialogContent
+        onEscapeKeyDown={handleCloseDialog}
+        onPointerDownOutside={handleCloseDialog}
+      >
+        <DialogHeader>
+          <DialogTitle>Subscription Details</DialogTitle>
+        </DialogHeader>
+
+        <SubscriptionForm
+          mode={selectedSubscription ? "update" : "create"}
+          defaultValues={selectedSubscription}
+        />
+      </DialogContent>
+    ),
+    [selectedSubscription, handleCloseDialog],
+  );
 
   return (
-    <SubscriptionContext.Provider
-      value={{
-        selectedSubscription,
-        setSelectedSubscription: setSelectedSubscription,
-        isDialogOpen,
-        setIsDialogOpen,
-        setIsDirty,
-      }}
-    >
+    <SubscriptionContext.Provider value={contextValue}>
       {children}
-      <Dialog open={isDialogOpen} onOpenChange={onDialogOpenChange}>
-        <DialogContent
-          onEscapeKeyDown={(e) => e.preventDefault()}
-          onPointerDownOutside={(e) => {
-            if (isDirty) {
-              e.preventDefault();
-              setShowAlert(true);
-            }
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>Subscription Details</DialogTitle>
-          </DialogHeader>
-
-          <SubscriptionForm
-            mode={selectedSubscription ? "update" : "create"}
-            defaultValues={selectedSubscription}
-          />
-        </DialogContent>
+      <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
+        {dialogContent}
       </Dialog>
       <UnsavedAlertDialog
         open={showAlert}
         onOpenChange={setShowAlert}
-        onContinueAction={() => setIsDialogOpen(false)}
+        onContinueAction={handleContinueAction}
       />
     </SubscriptionContext.Provider>
   );
 };
 
-export const useSubscription = () => {
+export const useSubscription = (): SubscriptionContextType => {
   const context = use(SubscriptionContext);
+
   if (!context) {
     throw new Error(
-      "useSelectedSubscription must be used within a SelectedSubscriptionProvider",
+      "useSubscription must be used within a SubscriptionProvider",
     );
   }
+
   return context;
 };

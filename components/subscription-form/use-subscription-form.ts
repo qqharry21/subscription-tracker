@@ -1,24 +1,17 @@
+import {
+  createSubscription,
+  deleteSubscription,
+  updateSubscription,
+} from "@/actions/subscription-action";
+import { subscriptionSchema } from "@/lib/schema";
+import { Category, Currency, Frequency } from "@/types/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "http-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useCallback, useEffect } from "react";
-import {
-  createSubscription,
-  updateSubscription,
-  deleteSubscription,
-} from "@/actions/subscription-action";
-import { subscriptionSchema } from "@/lib/schema";
-import { Tables } from "@/types/supabase";
-import { Category, Currency, Frequency } from "@/types/enums";
+import { SubscriptionFormData, UseSubscriptionFormProps } from "./types";
 
-interface UseSubscriptionFormProps {
-  mode: "create" | "update";
-  defaultValues?: Partial<Tables<"subscription">>;
-  onSuccess: () => void;
-}
-
-export const defaultFormValues = {
+export const defaultFormValues: Partial<SubscriptionFormData> = {
   name: "",
   start_date: new Date().toDateString(),
   end_date: undefined,
@@ -34,24 +27,24 @@ export const useSubscriptionForm = ({
   defaultValues = defaultFormValues,
   onSuccess,
 }: UseSubscriptionFormProps) => {
-  const form = useForm<Tables<"subscription">>({
+  const form = useForm<SubscriptionFormData>({
     mode: "onChange",
     resolver: zodResolver(subscriptionSchema),
     defaultValues,
   });
 
-  const { refresh, isLoading } = useMutation(
+  const { refresh: submitMutation, isLoading } = useMutation(
     mode === "create" ? createSubscription : updateSubscription,
     {
       params: form.getValues(),
-      onResolve() {
+      onResolve: () => {
         form.reset();
         toast.success(
           mode === "create" ? "Successfully created" : "Successfully updated",
         );
         onSuccess();
       },
-      onError() {
+      onError: () => {
         toast.error(
           mode === "create" ? "Failed to create" : "Failed to update",
         );
@@ -59,7 +52,7 @@ export const useSubscriptionForm = ({
     },
   );
 
-  const { refresh: deleteAction, isLoading: isDeleteLoading } = useMutation(
+  const { refresh: deleteMutation, isLoading: isDeleteLoading } = useMutation(
     deleteSubscription,
     {
       params: form.getValues("id"),
@@ -74,7 +67,7 @@ export const useSubscriptionForm = ({
     form,
     isLoading,
     isDeleteLoading,
-    submitForm: form.handleSubmit(refresh),
-    deleteAction,
+    handleSubmit: form.handleSubmit(submitMutation),
+    handleDelete: deleteMutation,
   };
 };
