@@ -36,7 +36,7 @@ export default function SubscriptionCalendar({
         weekdays: "w-full items-center justify-between gap-2",
         weekday: "w-full select-none bg-accent/50 py-2",
         week: "justify-between items-center gap-2 max-w-full",
-        day: "group size-full max-md:aspect-square md:min-h-40 overflow-hidden bg-accent hover:bg-accent/80 hover:text-accent-foreground/80 focus:bg-accent/80 focus:text-accent-foreground/80 transition-all",
+        day: "group size-full min-h-20 md:min-h-40 overflow-hidden bg-accent hover:bg-accent/80 hover:text-accent-foreground/80 focus:bg-accent/80 focus:text-accent-foreground/80 transition-all",
         dropdowns: "gap-x-4",
         selected:
           "bg-accent ring ring-primary ring-offset-2 text-accent-foreground hover:bg-accent/80 focus:bg-accent/80 hover:text-accent-foreground/80 focus:text-accent-foreground/80",

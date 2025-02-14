@@ -23,15 +23,15 @@ export default async function ProtectedPage() {
   // console.log("🚨 - subscriptions", subscriptions);
 
   return (
-    <SubscriptionProvider>
-      <SelectedDateProvider>
+    <SelectedDateProvider>
+      <SubscriptionProvider>
         <div className="@container relative mx-auto w-full max-w-6xl flex-1">
           <SubscriptionCalendar subscriptions={subscriptions ?? []} />
           <div className="text-right">Total amount: $500/per month</div>
         </div>
 
         <SubscriptionCreateButton />
-      </SelectedDateProvider>
-    </SubscriptionProvider>
+      </SubscriptionProvider>
+    </SelectedDateProvider>
   );
 }

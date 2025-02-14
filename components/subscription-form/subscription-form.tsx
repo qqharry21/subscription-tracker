@@ -6,10 +6,7 @@ import { UnsavedAlertDialog } from "../unsaved-alert";
 import { FormActions } from "./form-actions";
 import { FormFields } from "./form-fields";
 
-import {
-  defaultFormValues,
-  useSubscriptionForm,
-} from "./use-subscription-form";
+import { useSubscriptionForm } from "./use-subscription-form";
 
 import { Tables } from "@/types/supabase";
 
@@ -19,7 +16,7 @@ interface SubscriptionFormProps {
 }
 
 export const SubscriptionForm = memo(
-  ({ mode, defaultValues = defaultFormValues }: SubscriptionFormProps) => {
+  ({ mode, defaultValues }: SubscriptionFormProps) => {
     const [readOnly, setReadOnly] = useState(mode === "update");
     const [showAlert, setShowAlert] = useState(false);
     const { setIsDialogOpen, setIsDirty, setSelectedSubscription } =

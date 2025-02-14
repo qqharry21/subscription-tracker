@@ -3,6 +3,7 @@ import {
   deleteSubscription,
   updateSubscription,
 } from "@/actions/subscription-action";
+import { useSelectedDate } from "@/context/selected-date-context";
 import { subscriptionSchema } from "@/lib/schema";
 import { Category, Currency, Frequency } from "@/types/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,26 +12,39 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { SubscriptionFormData, UseSubscriptionFormProps } from "./types";
 
-export const defaultFormValues: Partial<SubscriptionFormData> = {
+const defaultFormValues: Partial<SubscriptionFormData> = {
   name: "",
   start_date: new Date().toDateString(),
   end_date: undefined,
   category: Category.ENTERTAINMENT,
   currency: Currency.TWD,
-  amount: 500,
+  amount: 0,
   frequency: Frequency.MONTHLY,
   note: "",
 };
 
 export const useSubscriptionForm = ({
   mode,
-  defaultValues = defaultFormValues,
+  defaultValues,
   onSuccess,
 }: UseSubscriptionFormProps) => {
+  const { selectedDate } = useSelectedDate();
+
+  const defaultFormValues: Partial<SubscriptionFormData> = {
+    name: "",
+    start_date: selectedDate?.toDateString() ?? new Date().toDateString(),
+    end_date: undefined,
+    category: Category.ENTERTAINMENT,
+    currency: Currency.TWD,
+    amount: 0,
+    frequency: Frequency.MONTHLY,
+    note: "",
+  };
+
   const form = useForm<SubscriptionFormData>({
     mode: "onChange",
     resolver: zodResolver(subscriptionSchema),
-    defaultValues,
+    defaultValues: defaultValues ?? defaultFormValues,
   });
 
   const { refresh: submitMutation, isLoading } = useMutation(

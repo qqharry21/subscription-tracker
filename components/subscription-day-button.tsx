@@ -7,10 +7,14 @@ import { Button } from "./ui/button";
 
 import { cn } from "@/lib/utils";
 import { Tables } from "@/types/supabase";
+import { useRef } from "react";
 
 interface CustomDayButtonProps extends DayButtonProps {
   existSubscription: Tables<"subscription">[];
 }
+
+const doubleTapThreshold = 300;
+
 export const SubscriptionDayButton = ({
   day,
   existSubscription,
@@ -20,9 +24,28 @@ export const SubscriptionDayButton = ({
   const { setSelectedDate } = useSelectedDate();
   const { setIsDialogOpen, setSelectedSubscription } = useSubscription();
 
+  const lastTap = useRef(0);
+
   const handleClick = (subscription: Tables<"subscription">) => {
     setSelectedSubscription(subscription);
     setIsDialogOpen(true);
+  };
+
+  const onDayButtonClick = () => {
+    setIsDialogOpen(true);
+    setSelectedDate(day?.date);
+  };
+
+  const handleDoubleTap = (e: React.TouchEvent) => {
+    e.preventDefault();
+    const currentTime = new Date().getTime();
+    const timeDiff = currentTime - lastTap.current;
+
+    if (timeDiff < doubleTapThreshold && timeDiff > 0) {
+      onDayButtonClick();
+    }
+
+    lastTap.current = currentTime;
   };
 
   return (
@@ -64,10 +87,11 @@ export const SubscriptionDayButton = ({
           ))}
         </div>
       </div>
-      <div
-        className="absolute top-0 left-0 z-[5] size-full"
-        onClick={() => setSelectedDate?.(day.date)}
-      ></div>
+      <button
+        className="absolute top-0 left-0 z-[5] size-full cursor-pointer"
+        onDoubleClick={onDayButtonClick}
+        onTouchEnd={handleDoubleTap}
+      ></button>
     </div>
   );
 };
