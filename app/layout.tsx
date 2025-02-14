@@ -5,11 +5,10 @@ import { Header } from "@/components/header";
 import HeaderAuth from "@/components/header-auth";
 import MotionProvider from "@/components/motion-provider";
 import MouseMoveEffect from "@/components/mouse-move-effect";
-import ThemeProvider from "@/components/theme-provider";
 
 import { cn } from "@/lib/utils";
-import "./globals.css";
 import { Toaster } from "sonner";
+import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -45,24 +44,17 @@ export default function RootLayout({
     >
       <body className="bg-background text-foreground">
         <MotionProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="flex min-h-screen flex-col items-center">
-              <Header>
-                <HeaderAuth />
-              </Header>
-              <main className="flex w-full flex-grow flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <Toaster />
-            <MouseMoveEffect />
-          </ThemeProvider>
+          <div className="relative flex min-h-screen flex-col items-center">
+            <Header>
+              <HeaderAuth />
+            </Header>
+            <main className="flex w-full flex-grow flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+          <MouseMoveEffect />
         </MotionProvider>
       </body>
     </html>

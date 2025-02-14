@@ -1,6 +1,7 @@
 import { format } from "date-fns";
-
 import { CalendarIcon } from "lucide-react";
+import { memo } from "react";
+import { useFormContext } from "react-hook-form";
 
 import { CurrencySelectInput } from "@/components/currency-select-input";
 import { Button } from "@/components/ui/button";
@@ -30,8 +31,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { category, frequency } from "@/lib";
 import { cn, formatNumber } from "@/lib/utils";
 import { Currency, Frequency } from "@/types/enums";
-import { memo } from "react";
-import { useFormContext } from "react-hook-form";
 import { SubscriptionFormData } from "./types";
 
 interface FormFieldsProps {

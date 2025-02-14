@@ -30,7 +30,7 @@ export default function Hero({ user }: { user: User | null }) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, ease: "easeInOut" }}
-          className="text-foreground text-6xl font-bold tracking-tight md:text-8xl"
+          className="text-6xl font-bold tracking-tight text-white/90 md:text-8xl"
         >
           Never Forget Your
           <br />
@@ -42,7 +42,7 @@ export default function Hero({ user }: { user: User | null }) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, ease: "easeInOut" }}
-          className="text-muted-foreground max-w-3xl text-xl text-balance"
+          className="max-w-3xl text-xl text-balance text-zinc-200"
         >
           Track, manage, and optimize all your subscriptions in one place with{" "}
           <span className="font-bold">SubTrack</span>.
@@ -50,6 +50,7 @@ export default function Hero({ user }: { user: User | null }) {
         <MotionButton
           asChild
           type="button"
+          variant="secondary"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6, ease: "easeInOut" }}
