@@ -4,8 +4,6 @@ import SelectedDateProvider from "@/context/selected-date-context";
 import { SubscriptionProvider } from "@/context/subscription-provider";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -27,13 +25,11 @@ export default async function ProtectedPage() {
   return (
     <SubscriptionProvider>
       <SelectedDateProvider>
-        <div className="@container mx-auto w-full max-w-6xl flex-1">
-          <div className="relative mb-12">
-            <SubscriptionCalendar subscriptions={subscriptions ?? []} />
-            <div className="text-right">Total amount: $500/per month</div>
-          </div>
-          <DataTable columns={columns} data={subscriptions ?? []} />
+        <div className="@container relative mx-auto w-full max-w-6xl flex-1">
+          <SubscriptionCalendar subscriptions={subscriptions ?? []} />
+          <div className="text-right">Total amount: $500/per month</div>
         </div>
+
         <SubscriptionCreateButton />
       </SelectedDateProvider>
     </SubscriptionProvider>

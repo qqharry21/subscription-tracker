@@ -1,9 +1,8 @@
 import {
-  BellIcon,
   LayoutDashboardIcon,
+  ListIcon,
   LogOutIcon,
   SettingsIcon,
-  Sparkles,
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -64,21 +63,12 @@ export default async function HeaderAuth() {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link
-            href="/pricing"
-            className="flex w-full cursor-pointer items-center"
-          >
-            <Sparkles size={16} className="mr-2" />
-            <span>Upgrade to Pro</span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link
-            href="/admin/notification"
+            href="/admin/subscriptions"
             prefetch={false}
             className="flex w-full cursor-pointer items-center"
           >
-            <BellIcon size={16} className="mr-2" />
-            <span>Notification</span>
+            <ListIcon size={16} className="mr-2" />
+            <span>View Subscriptions</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
