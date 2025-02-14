@@ -22,13 +22,17 @@ export const SubscriptionForm = memo(
   ({ mode, defaultValues = defaultFormValues }: SubscriptionFormProps) => {
     const [readOnly, setReadOnly] = useState(mode === "update");
     const [showAlert, setShowAlert] = useState(false);
-    const { setIsDialogOpen, setIsDirty } = useSubscription();
+    const { setIsDialogOpen, setIsDirty, setSelectedSubscription } =
+      useSubscription();
 
     const { form, isLoading, isDeleteLoading, handleSubmit, handleDelete } =
       useSubscriptionForm({
         mode,
         defaultValues,
-        onSuccess: () => setIsDialogOpen(false),
+        onSuccess: () => {
+          setIsDialogOpen(false);
+          setSelectedSubscription(undefined);
+        },
       });
 
     const handleKeydown = useCallback(

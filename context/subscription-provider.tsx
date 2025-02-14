@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, use, useMemo, useCallback, useState } from "react";
+import { createContext, use, useCallback, useMemo, useState } from "react";
 
 import { SubscriptionForm } from "@/components/subscription-form";
 import {
@@ -36,13 +36,6 @@ export const SubscriptionProvider = ({
   const [selectedSubscription, setSelectedSubscription] = useState<
     Tables<"subscription"> | undefined
   >();
-
-  const handleDialogOpenChange = useCallback((open: boolean) => {
-    if (!open) {
-      setSelectedSubscription(undefined);
-    }
-    setIsDialogOpen(open);
-  }, []);
 
   const handleCloseDialog = useCallback(
     (e: Event) => {
@@ -91,7 +84,7 @@ export const SubscriptionProvider = ({
   return (
     <SubscriptionContext.Provider value={contextValue}>
       {children}
-      <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         {dialogContent}
       </Dialog>
       <UnsavedAlertDialog
