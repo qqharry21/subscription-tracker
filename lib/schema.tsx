@@ -1,4 +1,9 @@
-import { Category, Currency, Frequency } from "@/types/enums";
+import {
+  Category,
+  Currency,
+  Frequency,
+  NotificationFrequency,
+} from "@/types/enums";
 import { z } from "zod";
 
 export const subscriptionSchema = z
@@ -12,6 +17,7 @@ export const subscriptionSchema = z
     start_date: z.string({ message: "Start date is required" }),
     end_date: z.string().optional().nullable(),
     currency: z.nativeEnum(Currency),
+    notification: z.nativeEnum(NotificationFrequency),
     // currencyRate: z.number(),
     amount: z
       .number()

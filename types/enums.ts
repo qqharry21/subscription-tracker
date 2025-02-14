@@ -32,3 +32,10 @@ export enum Frequency {
   MONTHLY = "MONTHLY",
   ANNUALLY = "ANNUALLY",
 }
+
+export enum NotificationFrequency {
+  ONE_DAY_BEFORE = "ONE_DAY_BEFORE",
+  ONE_WEEK_BEFORE = "ONE_WEEK_BEFORE",
+  ONE_MONTH_BEFORE = "ONE_MONTH_BEFORE",
+  NONE = "NONE",
+}

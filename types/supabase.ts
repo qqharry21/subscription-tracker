@@ -38,7 +38,7 @@ export type Database = {
           id: string
           name: string
           note: string | null
-          should_notify: boolean
+          notification_frequency: Database["public"]["Enums"]["Notification_Frequency"]
           start_date: string
           updated_at: string
           user_id: string | null
@@ -53,7 +53,7 @@ export type Database = {
           id?: string
           name: string
           note?: string | null
-          should_notify: boolean
+          notification_frequency: Database["public"]["Enums"]["Notification_Frequency"]
           start_date: string
           updated_at?: string
           user_id?: string | null
@@ -68,7 +68,7 @@ export type Database = {
           id?: string
           name?: string
           note?: string | null
-          should_notify?: boolean
+          notification_frequency?: Database["public"]["Enums"]["Notification_Frequency"]
           start_date?: string
           updated_at?: string
           user_id?: string | null
@@ -102,6 +102,11 @@ export type Database = {
         | "OTHER"
       Currency: "USD" | "JPY" | "TWD"
       Frequency: "ONE_TIME" | "DAILY" | "WEEKLY" | "MONTHLY" | "ANNUALLY"
+      Notification_Frequency:
+        | "ONE_DAY_BEFORE"
+        | "ONE_WEEK_BEFORE"
+        | "ONE_MONTH_BEFORE"
+        | "NONE"
     }
     CompositeTypes: {
       [_ in never]: never

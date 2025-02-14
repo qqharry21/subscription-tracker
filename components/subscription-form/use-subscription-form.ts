@@ -5,23 +5,17 @@ import {
 } from "@/actions/subscription-action";
 import { useSelectedDate } from "@/context/selected-date-context";
 import { subscriptionSchema } from "@/lib/schema";
-import { Category, Currency, Frequency } from "@/types/enums";
+import {
+  Category,
+  Currency,
+  Frequency,
+  NotificationFrequency,
+} from "@/types/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "http-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { SubscriptionFormData, UseSubscriptionFormProps } from "./types";
-
-const defaultFormValues: Partial<SubscriptionFormData> = {
-  name: "",
-  start_date: new Date().toDateString(),
-  end_date: undefined,
-  category: Category.ENTERTAINMENT,
-  currency: Currency.TWD,
-  amount: 0,
-  frequency: Frequency.MONTHLY,
-  note: "",
-};
 
 export const useSubscriptionForm = ({
   mode,
@@ -39,6 +33,7 @@ export const useSubscriptionForm = ({
     amount: 0,
     frequency: Frequency.MONTHLY,
     note: "",
+    notification_frequency: NotificationFrequency.ONE_DAY_BEFORE,
   };
 
   const form = useForm<SubscriptionFormData>({

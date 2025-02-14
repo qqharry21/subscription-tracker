@@ -30,7 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { category, frequency } from "@/lib";
 import { cn, formatNumber } from "@/lib/utils";
-import { Currency, Frequency } from "@/types/enums";
+import { Currency, Frequency, NotificationFrequency } from "@/types/enums";
 import { SubscriptionFormData } from "./types";
 
 interface FormFieldsProps {
@@ -46,6 +46,7 @@ export const FormFields = memo(({ disabled }: FormFieldsProps) => {
       <CategorySelectField disabled={disabled} />
       <FrequencySelectField disabled={disabled} />
       <AmountField disabled={disabled} />
+      <NotificationField disabled={disabled} />
       <NoteField disabled={disabled} />
     </div>
   );
@@ -86,7 +87,7 @@ const StartDateField = ({ disabled }: { disabled: boolean }) => {
       control={control}
       render={({ field }) => (
         <FormItem className="col-span-4 grid md:col-span-2">
-          <FormLabel>Start Date</FormLabel>
+          <FormLabel>First Payment</FormLabel>
           <Popover modal={true}>
             <PopoverTrigger asChild>
               <FormControl>
@@ -245,6 +246,43 @@ const FrequencySelectField = ({ disabled }: { disabled: boolean }) => {
             </FormControl>
             <SelectContent>
               {Object.entries(frequency).map(([key, value]) => (
+                <SelectItem key={key} value={key}>
+                  {value}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
+
+const NotificationField = ({ disabled }: { disabled: boolean }) => {
+  const { control } = useFormContext<SubscriptionFormData>();
+  return (
+    <FormField
+      name="notification_frequency"
+      control={control}
+      render={({ field }) => (
+        <FormItem className="col-span-4 grid">
+          <FormLabel>Notification</FormLabel>
+          <Select
+            disabled={disabled}
+            value={field.value}
+            onValueChange={field.onChange}
+          >
+            <FormControl>
+              <SelectTrigger
+                id="notification_frequency"
+                className="disabled:opacity-80"
+              >
+                <SelectValue placeholder="" />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              {Object.entries(NotificationFrequency).map(([key, value]) => (
                 <SelectItem key={key} value={key}>
                   {value}
                 </SelectItem>
