@@ -71,12 +71,7 @@ export const SubscriptionForm = memo(
       <>
         <Form {...form}>
           <form onSubmit={handleSubmit} onKeyDown={handleKeydown}>
-            <FormFields
-              form={form}
-              readOnly={readOnly}
-              isLoading={isLoading}
-              isDeleteLoading={isDeleteLoading}
-            />
+            <FormFields disabled={readOnly || isLoading || isDeleteLoading} />
             <FormActions
               mode={mode}
               form={form}
