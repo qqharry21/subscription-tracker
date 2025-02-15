@@ -28,9 +28,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-import { category, frequency } from "@/lib";
+import { category, frequency, notificationFrequency } from "@/lib";
 import { cn, formatNumber } from "@/lib/utils";
-import { Currency, Frequency, NotificationFrequency } from "@/types/enums";
+import { Currency, Frequency } from "@/types/enums";
 import { SubscriptionFormData } from "./types";
 
 interface FormFieldsProps {
@@ -39,7 +39,7 @@ interface FormFieldsProps {
 
 export const FormFields = memo(({ disabled }: FormFieldsProps) => {
   return (
-    <div className="grid max-h-[450px] grid-cols-4 gap-2 overflow-auto px-1 py-2 md:gap-y-4 md:px-4 md:py-4">
+    <div className="grid max-h-[500px] grid-cols-4 gap-2 overflow-auto px-1 py-2 md:gap-y-4 md:px-4 md:py-4">
       <NameField disabled={disabled} />
       <StartDateField disabled={disabled} />
       <EndDateField disabled={disabled} />
@@ -282,7 +282,7 @@ const NotificationField = ({ disabled }: { disabled: boolean }) => {
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {Object.entries(NotificationFrequency).map(([key, value]) => (
+              {Object.entries(notificationFrequency).map(([key, value]) => (
                 <SelectItem key={key} value={key}>
                   {value}
                 </SelectItem>

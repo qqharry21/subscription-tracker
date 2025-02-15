@@ -72,11 +72,13 @@ export const useSubscriptionForm = ({
     },
   );
 
+  const handleSubmit = form.handleSubmit(submitMutation);
+
   return {
     form,
     isLoading,
     isDeleteLoading,
-    handleSubmit: form.handleSubmit(submitMutation),
+    handleSubmit,
     handleDelete: deleteMutation,
   };
 };

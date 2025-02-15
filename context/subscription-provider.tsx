@@ -12,7 +12,6 @@ import {
 import { UnsavedAlertDialog } from "@/components/unsaved-alert";
 
 import { Tables } from "@/types/supabase";
-import { useSelectedDate } from "./selected-date-context";
 
 interface SubscriptionContextType {
   isDialogOpen: boolean;
@@ -37,7 +36,6 @@ export const SubscriptionProvider = ({
   const [selectedSubscription, setSelectedSubscription] = useState<
     Tables<"subscription"> | undefined
   >();
-  const { selectedDate } = useSelectedDate();
 
   const handleCloseDialog = useCallback(
     (e: Event) => {

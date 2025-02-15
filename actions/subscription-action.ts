@@ -19,13 +19,14 @@ export async function createSubscription(data: any) {
       });
 
     const parsed = subscriptionSchema.safeParse(data);
+
     if (!parsed.success) {
       return actionData(parsed.error.format(), { status: 400 });
     }
 
     const { data: newSubscription, error } = await supabase
       .from("subscription")
-      .insert({ ...data, user_id: user.id, should_notify: false })
+      .insert({ ...data, user_id: user.id })
       .select();
 
     if (error) {

@@ -17,7 +17,7 @@ export const subscriptionSchema = z
     start_date: z.string({ message: "Start date is required" }),
     end_date: z.string().optional().nullable(),
     currency: z.nativeEnum(Currency),
-    notification: z.nativeEnum(NotificationFrequency),
+    notification_frequency: z.nativeEnum(NotificationFrequency),
     // currencyRate: z.number(),
     amount: z
       .number()

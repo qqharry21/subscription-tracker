@@ -32,6 +32,9 @@ export const SubscriptionForm = memo(
         },
       });
 
+    console.log("form values", form.getValues());
+    console.log("form errors", form.formState.errors);
+
     const handleKeydown = useCallback(
       (e: React.KeyboardEvent<HTMLFormElement>) => {
         if (e.key === "Enter" && !(e.target instanceof HTMLTextAreaElement)) {

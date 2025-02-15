@@ -1,4 +1,9 @@
-import { Category, Currency, Frequency } from "@/types/enums";
+import {
+  Category,
+  Currency,
+  Frequency,
+  NotificationFrequency,
+} from "@/types/enums";
 import {
   BookUserIcon,
   CircleDollarSignIcon,
@@ -137,6 +142,13 @@ export enum Level {
   MEDIUM = "MEDIUM",
   LOW = "LOW",
 }
+
+export const notificationFrequency = {
+  [NotificationFrequency.ONE_DAY_BEFORE]: "One day before",
+  [NotificationFrequency.ONE_WEEK_BEFORE]: "One week before",
+  [NotificationFrequency.ONE_MONTH_BEFORE]: "One month before",
+  [NotificationFrequency.NONE]: "None",
+};
 
 // export const incomeCategory = {
 //   [IncomeCategory.SALARY]: {
