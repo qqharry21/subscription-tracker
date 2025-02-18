@@ -58,12 +58,10 @@ export const signInAction = async (formData: FormData) => {
 
 export const signInWithGoogleAction = async () => {
   const supabase = await createClient();
-  const redirectTo = `${process.env.CALLBACK_URL}/auth/callback`;
-  console.log("🚨 - redirectTo", redirectTo);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo,
+      redirectTo: `${process.env.CALLBACK_URL}/auth/callback`,
     },
   });
 

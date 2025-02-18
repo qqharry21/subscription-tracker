@@ -20,7 +20,8 @@ export default async function ProtectedPage() {
     .from("subscription")
     .select("*")
     .eq("user_id", user.id);
-  // console.log("🚨 - subscriptions", subscriptions);
+
+  console.log("🚨 - subscriptions", subscriptions);
 
   return (
     <SelectedDateProvider>
